@@ -9,13 +9,13 @@ import at.fhhgb.command.Command;
 import at.fhhgb.command.CommandNotFoundException;
 
 
-public class CommandLocator {
+public class CommandTranslator {
     
     private static final String SIMON_SAYS_PREFIX = "simon says ";
     private CommandRepository commands;
     private boolean           simonSaysModeEnabled = false;
     
-    public CommandLocator(CommandRepository commands) {
+    public CommandTranslator(CommandRepository commands) {
         this.commands = commands;
     }
     

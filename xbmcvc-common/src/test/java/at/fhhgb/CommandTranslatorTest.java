@@ -16,15 +16,15 @@ import at.fhhgb.command.VolumeUpCommand;
 import at.fhhgb.xbmc.XbmcCommunicator;
 
 
-public class CommandLocatorTest {
+public class CommandTranslatorTest {
     private CommandRepository repository;
-    private CommandLocator    locator;
+    private CommandTranslator    locator;
     private XbmcCommunicator  communicator;
     
     @Before
     public void createCommandLocator() {
         repository = new CommandRepository();
-        locator = new CommandLocator(repository);
+        locator = new CommandTranslator(repository);
         communicator = null;
     }
     
