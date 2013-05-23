@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -17,7 +19,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class XbmcCommunicator {
-    private final String urlString;
+    private static final String GET_PLAYER_ID_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
+    
+    private final String        urlString;
     
     public XbmcCommunicator(String host, String port) {
         urlString = "http://" + host + ":" + port + "/jsonrpc";
@@ -33,6 +37,28 @@ public class XbmcCommunicator {
         }
         
         return result;
+    }
+    
+    public void sendJsonIncludingPlayerId(String command) {
+        String result = sendJson(GET_PLAYER_ID_JSON);
+        
+        String playerId = extractPlayerId(result);
+        if (playerId == null) {
+            throw new PlayerNotRunningException(
+                    "Could not get Player-ID. Are you sure a player is running inside XBMC? ERROR: " + result);
+        }
+        
+        sendJson(String.format(command, playerId));
+    }
+    
+    private String extractPlayerId(String result) {
+        String playerId = null;
+        Pattern p = Pattern.compile("playerid\":(\\d+)");
+        Matcher matcher = p.matcher(result);
+        if (matcher.find()) {
+            playerId = matcher.group(1);
+        }
+        return playerId;
     }
     
     private String sendRequest(String json, String urlString) throws UnsupportedEncodingException, IOException, ClientProtocolException {
