@@ -39,7 +39,7 @@ public class CommandRepositoryFactory {
         repository.addCommand("(navigate )?right", new NavigateRightCommand(communicator));
         repository.addCommand("(navigate )?up", new NavigateUpCommand(communicator));
         repository.addCommand("(navigate )?down", new NavigateDownCommand(communicator));
-        repository.addCommand("select", new SelectCommand(communicator));
+        repository.addCommand("(select|ok)", new SelectCommand(communicator));
         repository.addCommand("(back|escape)", new BackCommand(communicator));
         repository.addCommand("info", new InfoCommand(communicator));
         repository.addCommand("(right click|context( menu)?|options)", new ContextMenuCommand(communicator));
