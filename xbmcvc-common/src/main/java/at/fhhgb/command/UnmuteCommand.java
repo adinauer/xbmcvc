@@ -17,7 +17,7 @@ public class UnmuteCommand
     
     @Override
     public void execute() {
-        communicator.sendJson("Application.SetMute", "\"mute\": false");
+        communicator.sendJsonWithParameters("Application.SetMute", "\"mute\": false");
     }
     
 }

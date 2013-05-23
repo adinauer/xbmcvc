@@ -14,6 +14,6 @@ public class PausePlaybackCommand
     
     @Override
     public void execute() {
-        communicator.sendJsonIncludingPlayerId("Player.PlayPause", "\"playerid\": %s, \"play\": false");
+        communicator.sendJsonIncludingPlayerIdWithParameters("Player.PlayPause", "\"play\": false");
     }
 }

@@ -30,10 +30,10 @@ public class XbmcCommunicator {
     }
     
     public String sendJson(String method) {
-        return sendJson(method, "");
+        return sendJsonWithParameters(method, "");
     }
     
-    public String sendJson(String method, String parameters) {
+    public String sendJsonWithParameters(String method, String parameters) {
         String result = null;
         String json = String.format(XBMC_JSON_TEMPLATE, method, parameters);
         
@@ -46,7 +46,12 @@ public class XbmcCommunicator {
         return result;
     }
     
-    public void sendJsonIncludingPlayerId(String method, String parameters) {
+    
+    public String sendJsonIncludingPlayerId(String method) {
+        return sendJsonIncludingPlayerIdWithParameters(method, "");
+    }
+    
+    public String sendJsonIncludingPlayerIdWithParameters(String method, String parameters) {
         String result = sendJson(GET_PLAYER_ID_METHOD);
         
         String playerId = extractPlayerId(result);
@@ -55,7 +60,12 @@ public class XbmcCommunicator {
                     "Could not get Player-ID. Are you sure a player is running inside XBMC? ERROR: " + result);
         }
         
-        sendJson(method, String.format(parameters, playerId));
+        String parametersWithPlayerId = String.format("\"playerid\": %s", playerId);
+        if (parameters != null && !"".equals(parameters)) {
+            parametersWithPlayerId += ", " + parameters;
+        }
+        
+        return sendJsonWithParameters(method, parametersWithPlayerId);
     }
     
     private String extractPlayerId(String result) {

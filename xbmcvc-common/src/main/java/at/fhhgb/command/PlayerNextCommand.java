@@ -14,6 +14,6 @@ public class PlayerNextCommand
     
     @Override
     public void execute() {
-        communicator.sendJsonIncludingPlayerId("Player.GoTo", "\"playerid\": %s, \"to\": \"next\"");
+        communicator.sendJsonIncludingPlayerIdWithParameters("Player.GoTo", "\"to\": \"next\"");
     }
 }

@@ -23,13 +23,13 @@ public abstract class VolumeCommand
         
         volume = adjustVolume(volume);
         
-        communicator.sendJson("Application.SetVolume", "\"volume\": " + volume);
+        communicator.sendJsonWithParameters("Application.SetVolume", "\"volume\": " + volume);
     }
     
     protected abstract Integer adjustVolume(Integer volume);
     
     private Integer getVolume() {
-        String result = communicator.sendJson("Application.GetProperties", "\"properties\": [ \"volume\" ]");
+        String result = communicator.sendJsonWithParameters("Application.GetProperties", "\"properties\": [ \"volume\" ]");
         
         Integer volume = extractVolume(result);
         

@@ -14,6 +14,6 @@ public class StopPlaybackCommand
     
     @Override
     public void execute() {
-        communicator.sendJsonIncludingPlayerId("Player.Stop", "\"playerid\": %s");
+        communicator.sendJsonIncludingPlayerId("Player.Stop");
     }
 }

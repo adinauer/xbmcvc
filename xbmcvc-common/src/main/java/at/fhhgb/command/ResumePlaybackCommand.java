@@ -14,6 +14,6 @@ public class ResumePlaybackCommand
     
     @Override
     public void execute() {
-        communicator.sendJsonIncludingPlayerId("Player.PlayPause", "\"playerid\": %s, \"play\": true");
+        communicator.sendJsonIncludingPlayerIdWithParameters("Player.PlayPause", "\"play\": true");
     }
 }
