@@ -7,14 +7,14 @@ import java.util.regex.Pattern;
 import at.fhhgb.xbmc.XbmcCommunicator;
 
 
-public class TogglePlaybackCommand
+public class PausePlaybackCommand
         extends
             Command {
     
     private static final String GET_PLAYER_ID_JSON     = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
-    private static final String TOGGLE_PLAY_PAUSE_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": %s }, \"id\": 1}";
+    private static final String TOGGLE_PLAY_PAUSE_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": %s, \"play\":false }, \"id\": 1}";
     
-    public TogglePlaybackCommand(XbmcCommunicator communicator) {
+    public PausePlaybackCommand(XbmcCommunicator communicator) {
         super(communicator);
     }
     
@@ -24,7 +24,8 @@ public class TogglePlaybackCommand
         
         String playerId = extractPlayerId(result);
         if (playerId == null) {
-            throw new RuntimeException("Could not get Player-ID: " + result);
+            throw new RuntimeException(
+                    "Could not get Player-ID. Are you sure something is opened in the player? ERROR: " + result);
         }
         communicator.sendJson(String.format(TOGGLE_PLAY_PAUSE_JSON, playerId));
     }
