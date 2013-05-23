@@ -14,7 +14,7 @@ public class CLI {
         
         String commandAsString = args[0];
         
-        CommandLocator locator = new CommandLocator(new CommandRepositoryFactory().create());
+        CommandLocator locator = new CommandLocator(new CommandRepositoryFactory().create("localhost", "8082"));
 //        locator.enableSimonSaysMode();
         
         Command command = locator.locate(commandAsString);

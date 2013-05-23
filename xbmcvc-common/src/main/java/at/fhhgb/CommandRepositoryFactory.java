@@ -25,10 +25,10 @@ import at.fhhgb.xbmc.XbmcCommunicator;
 
 public class CommandRepositoryFactory {
     
-    public CommandRepository create() {
+    public CommandRepository create(String host, String port) {
         CommandRepository repository = new CommandRepository();
         
-        XbmcCommunicator communicator = new XbmcCommunicator("localhost", "8082");
+        XbmcCommunicator communicator = new XbmcCommunicator(host, port);
         
         repository.addCommand("(louder|volume up)", new VolumeUpCommand(communicator));
         repository.addCommand("(softer|quieter|volume down)", new VolumeDownCommand(communicator));
