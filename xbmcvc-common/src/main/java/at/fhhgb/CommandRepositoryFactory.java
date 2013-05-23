@@ -44,10 +44,6 @@ public class CommandRepositoryFactory {
         repository.addCommandPattern("info", new InfoCommand(communicator));
         repository.addCommandPattern("(right click|context( menu)?|options)", new ContextMenuCommand(communicator));
         
-        
-        // commands todo: pause / play / stop / show(list of)? movies
-        // show(list of)? tv shows / next / previous / info / trailer
-        
         return repository;
     }
     
