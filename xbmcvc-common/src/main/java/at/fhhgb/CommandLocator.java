@@ -27,6 +27,8 @@ public class CommandLocator {
         return command;
     }
     
+    // TODO: add simon says mode to avoid unintentional commands
+    
     public Command locateFirstOf(List<String> commandListAsStrings) {
         Command command = null;
         

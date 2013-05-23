@@ -13,7 +13,7 @@ public class VolumeDownCommand
     }
     
     @Override
-    protected Integer calculateNewVolume(Integer volume) {
+    protected Integer adjustVolume(Integer volume) {
         volume -= VOLUME_CHANGE_AMOUNT;
         
         volume = volume < 0 ? 0 : volume;

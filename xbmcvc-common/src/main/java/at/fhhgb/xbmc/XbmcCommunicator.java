@@ -20,7 +20,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 
 public class XbmcCommunicator {
-    private static final String GET_PLAYER_ID_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
+    private static final String GET_PLAYER_ID_METHOD = "Player.GetActivePlayers";
+    private static final String XBMC_JSON_TEMPLATE   = "{\"jsonrpc\": \"2.0\", \"method\": \"%s\", \"params\": { %s }, \"id\": 1}";
+    private static final String GET_PLAYER_ID_JSON   = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
     
     private final String        urlString;
     
@@ -28,8 +30,15 @@ public class XbmcCommunicator {
         urlString = "http://" + host + ":" + port + "/jsonrpc";
     }
     
-    public String sendJson(String json) {
+    public String sendJson(String method) {
+        return sendJson(method, "");
+    }
+    
+    public String sendJson(String method, String parameters) {
         String result = null;
+        String json = String.format(XBMC_JSON_TEMPLATE, method, parameters);
+        
+        System.out.println(json);
         
         try {
             result = sendRequest(json, urlString);
@@ -37,11 +46,13 @@ public class XbmcCommunicator {
             e.printStackTrace();
         }
         
+        System.out.println(result);
+        
         return result;
     }
     
-    public void sendJsonIncludingPlayerId(String command) {
-        String result = sendJson(GET_PLAYER_ID_JSON);
+    public void sendJsonIncludingPlayerId(String method, String parameters) {
+        String result = sendJson(GET_PLAYER_ID_METHOD);
         
         String playerId = extractPlayerId(result);
         if (playerId == null) {
@@ -49,7 +60,7 @@ public class XbmcCommunicator {
                     "Could not get Player-ID. Are you sure a player is running inside XBMC? ERROR: " + result);
         }
         
-        sendJson(String.format(command, playerId));
+        sendJson(method, String.format(parameters, playerId));
     }
     
     private String extractPlayerId(String result) {

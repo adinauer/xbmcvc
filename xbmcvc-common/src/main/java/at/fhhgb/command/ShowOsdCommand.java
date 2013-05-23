@@ -4,16 +4,16 @@ package at.fhhgb.command;
 import at.fhhgb.xbmc.XbmcCommunicator;
 
 
-public class NavigateUpCommand
+public class ShowOsdCommand
         extends
             Command {
     
-    public NavigateUpCommand(XbmcCommunicator communicator) {
+    public ShowOsdCommand(XbmcCommunicator communicator) {
         super(communicator);
     }
     
     @Override
     public void execute() {
-        communicator.sendJson("Input.Up");
+        communicator.sendJson("Input.ShowOSD");
     }
 }
