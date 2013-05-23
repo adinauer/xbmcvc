@@ -12,6 +12,8 @@ public class CommandRepositoryFactory {
         
         repository.addCommandPattern("louder", new VolumeUpCommand());
         repository.addCommandPattern("mute( please)?", new MuteCommand());
+        // commands todo: pause / play / stop / show(list of)? movies
+        // show(list of)? tv shows / next / previous / info / trailer
         
         return repository;
     }
