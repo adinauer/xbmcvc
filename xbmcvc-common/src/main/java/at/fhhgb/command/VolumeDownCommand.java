@@ -4,19 +4,19 @@ package at.fhhgb.command;
 import at.fhhgb.xbmc.XbmcCommunicator;
 
 
-public class VolumeUpCommand
+public class VolumeDownCommand
         extends
             VolumeCommand {
     
-    public VolumeUpCommand(XbmcCommunicator communicator) {
+    public VolumeDownCommand(XbmcCommunicator communicator) {
         super(communicator);
     }
     
     @Override
     protected Integer calculateNewVolume(Integer volume) {
-        volume += VOLUME_CHANGE_AMOUNT;
+        volume -= VOLUME_CHANGE_AMOUNT;
         
-        volume = volume > 100 ? 100 : volume;
+        volume = volume < 0 ? 0 : volume;
         
         return volume;
     }

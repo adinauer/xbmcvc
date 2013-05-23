@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.ConnectException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -70,7 +71,14 @@ public class XbmcCommunicator {
         
         httppost.setEntity(content);
         
-        HttpResponse response = httpclient.execute(httppost);
+        HttpResponse response = null;
+        try {
+            response = httpclient.execute(httppost);
+        } catch (ConnectException e) {
+            throw new RuntimeException(
+                    "Could not connecto to XBMC. Are you sure XBMC is running and Allow control of XBMC via HTTP is checked in System > Settings > Services > Webserver? URL: "
+                            + urlString);
+        }
         
         return extractResponseText(response);
     }
