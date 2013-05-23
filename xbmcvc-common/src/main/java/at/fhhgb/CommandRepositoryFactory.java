@@ -11,6 +11,8 @@ import at.fhhgb.command.NavigateLeftCommand;
 import at.fhhgb.command.NavigateRightCommand;
 import at.fhhgb.command.NavigateUpCommand;
 import at.fhhgb.command.PausePlaybackCommand;
+import at.fhhgb.command.PlayerNextCommand;
+import at.fhhgb.command.PlayerPreviousCommand;
 import at.fhhgb.command.ResumePlaybackCommand;
 import at.fhhgb.command.SelectCommand;
 import at.fhhgb.command.ShowOsdCommand;
@@ -45,6 +47,8 @@ public class CommandRepositoryFactory {
         repository.addCommand("info", new InfoCommand(communicator));
         repository.addCommand("(right click|context( menu)?|options|menu)", new ContextMenuCommand(communicator));
         repository.addCommand("(show )?controls", new ShowOsdCommand(communicator));
+        repository.addCommand("next.*", new PlayerNextCommand(communicator));
+        repository.addCommand("previous.*", new PlayerPreviousCommand(communicator));
         
         return repository;
     }
