@@ -8,7 +8,7 @@ public class StopPlaybackCommand
         extends
             Command {
     
-    private static final String TOGGLE_PLAY_PAUSE_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": %s }, \"id\": 1}";
+    private static final String STOP_PLAYBACK_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.Stop\", \"params\": { \"playerid\": %s }, \"id\": 1}";
     
     public StopPlaybackCommand(XbmcCommunicator communicator) {
         super(communicator);
@@ -16,6 +16,6 @@ public class StopPlaybackCommand
     
     @Override
     public void execute() {
-        communicator.sendJsonIncludingPlayerId(TOGGLE_PLAY_PAUSE_JSON);
+        communicator.sendJsonIncludingPlayerId(STOP_PLAYBACK_JSON);
     }
 }
