@@ -3,6 +3,9 @@ package at.fhhgb;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,5 +60,39 @@ public class CommandLocatorTest {
         Command command = locator.locate("Louder");
         
         assertTrue(VolumeUpCommand.class.isAssignableFrom(command.getClass()));
+    }
+    
+    @Test
+    public void locatesFirstCommandInList() {
+        repository.addCommand("louder", new VolumeUpCommand(communicator));
+        repository.addCommand("mute", new MuteCommand(communicator));
+        
+        Command command = locator.locateFirstOf(commandsAsList("mute", "louder"));
+        
+        assertTrue(MuteCommand.class.isAssignableFrom(command.getClass()));
+    }
+    
+    @Test(expected = CommandNotFoundException.class)
+    public void throwsIfNoneOfTheCommandsIsRecognized() {
+        locator.locateFirstOf(commandsAsList("NOT A REAL COMMAND", "NEITHER IS THIS"));
+    }
+    
+    @Test
+    public void recognizesCommandEvenIfUnrecognizableCommandsAreFirstInList() {
+        repository.addCommand("mute", new MuteCommand(communicator));
+        
+        Command command = locator.locateFirstOf(commandsAsList("NOT A REAL COMMAND", "NEITHER IS THIS", "mute"));
+        
+        assertTrue(MuteCommand.class.isAssignableFrom(command.getClass()));
+    }
+    
+    private List<String> commandsAsList(String... commands) {
+        List<String> commandList = new ArrayList<>();
+        
+        for (String command : commands) {
+            commandList.add(command);
+        }
+        
+        return commandList;
     }
 }
