@@ -1,70 +1,44 @@
 package at.fhhgb.command;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.protocol.HTTP;
+import at.fhhgb.xbmc.XbmcCommunicator;
+
 
 
 
 
 public class MuteCommand
-        implements
+        extends
             Command {
     
-    public void execute() {
-        System.out.println("muting ...");
-        
-        String json =
-                "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": 1 }, \"id\": 1}";
-        // String json = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
-        String urlString = "http://localhost:8082/jsonrpc";
-        
-        try {
-            sendRequest(json, urlString);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void sendRequest(String json, String urlString) throws UnsupportedEncodingException, IOException, ClientProtocolException {
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httppost = new HttpPost(urlString);
-        
-        StringEntity entity2 = new StringEntity(json, HTTP.UTF_8);
-        entity2.setContentType("application/json");
-        httppost.setEntity(entity2);
-        
-        HttpResponse response = httpclient.execute(httppost);
-        extractResponseText(response);
+    private static final String GET_PLAYER_ID_JSON     = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
+    private static final String TOGGLE_PLAY_PAUSE_JSON = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.PlayPause\", \"params\": { \"playerid\": %s }, \"id\": 1}";
+    
+    public MuteCommand(XbmcCommunicator communicator) {
+        super(communicator);
     }
     
-    private void extractResponseText(HttpResponse response) throws IOException {
-        HttpEntity entity = response.getEntity();
+    @Override
+    public void execute() {
+        String result = communicator.sendJson(GET_PLAYER_ID_JSON);
         
-        System.out.println(response.getStatusLine());
-        if (entity != null) {
-            InputStream instream = entity.getContent();
-            try {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(instream));
-                String line = null;
-                while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
-                }
-            } finally {
-                instream.close();
-            }
+        String playerId = extractPlayerId(result);
+        if (playerId == null) {
+            throw new RuntimeException("Could not get Player-ID: " + result);
         }
+        communicator.sendJson(String.format(TOGGLE_PLAY_PAUSE_JSON, playerId));
+    }
+    
+    private String extractPlayerId(String result) {
+        String playerId = null;
+        Pattern p = Pattern.compile("playerid\":(\\d+)");
+        Matcher matcher = p.matcher(result);
+        if (matcher.find()) {
+            playerId = matcher.group(1);
+        }
+        return playerId;
     }
 }

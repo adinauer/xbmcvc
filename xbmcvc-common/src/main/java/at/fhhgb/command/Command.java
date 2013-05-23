@@ -1,5 +1,15 @@
 package at.fhhgb.command;
 
-public interface Command {
-    void execute();
+
+import at.fhhgb.xbmc.XbmcCommunicator;
+
+
+public abstract class Command {
+    protected final XbmcCommunicator communicator;
+    
+    public Command(XbmcCommunicator communicator) {
+        this.communicator = communicator;
+    }
+    
+    public abstract void execute();
 }

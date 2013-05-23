@@ -10,21 +10,24 @@ import at.fhhgb.command.Command;
 import at.fhhgb.command.CommandNotFoundException;
 import at.fhhgb.command.MuteCommand;
 import at.fhhgb.command.VolumeUpCommand;
+import at.fhhgb.xbmc.XbmcCommunicator;
 
 
 public class CommandLocatorTest {
     private CommandRepository repository;
     private CommandLocator    locator;
+    private XbmcCommunicator  communicator;
     
     @Before
     public void createCommandLocator() {
         repository = new CommandRepository();
         locator = new CommandLocator(repository);
+        communicator = null;
     }
     
     @Test
     public void locatesCommandThatMatchesGivenStringExactly() {
-        repository.addCommandPattern("louder", new VolumeUpCommand());
+        repository.addCommandPattern("louder", new VolumeUpCommand(communicator));
         
         Command command = locator.locate("louder");
         
@@ -33,7 +36,7 @@ public class CommandLocatorTest {
     
     @Test
     public void locatesCommandThatHasExtraWords() {
-        repository.addCommandPattern("mute( please)?", new MuteCommand());
+        repository.addCommandPattern("mute( please)?", new MuteCommand(communicator));
         
         Command command = locator.locate("mute");
         Command commandWithExtraWords = locator.locate("mute please");
@@ -49,7 +52,7 @@ public class CommandLocatorTest {
     
     @Test
     public void locatesCommandThatIsInDifferentCase() {
-        repository.addCommandPattern("louder", new VolumeUpCommand());
+        repository.addCommandPattern("louder", new VolumeUpCommand(communicator));
         
         Command command = locator.locate("Louder");
         
