@@ -22,7 +22,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 public class XbmcCommunicator {
     private static final String GET_PLAYER_ID_METHOD = "Player.GetActivePlayers";
     private static final String XBMC_JSON_TEMPLATE   = "{\"jsonrpc\": \"2.0\", \"method\": \"%s\", \"params\": { %s }, \"id\": 1}";
-    private static final String GET_PLAYER_ID_JSON   = "{\"jsonrpc\": \"2.0\", \"method\": \"Player.GetActivePlayers\", \"id\": 1}";
     
     private final String        urlString;
     
@@ -38,15 +37,11 @@ public class XbmcCommunicator {
         String result = null;
         String json = String.format(XBMC_JSON_TEMPLATE, method, parameters);
         
-        System.out.println(json);
-        
         try {
             result = sendRequest(json, urlString);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
-        System.out.println(result);
         
         return result;
     }

@@ -11,7 +11,9 @@ import at.fhhgb.command.CommandNotFoundException;
 
 public class CommandLocator {
     
+    private static final String SIMON_SAYS_PREFIX = "simon says ";
     private CommandRepository commands;
+    private boolean           simonSaysModeEnabled = false;
     
     public CommandLocator(CommandRepository commands) {
         this.commands = commands;
@@ -26,8 +28,6 @@ public class CommandLocator {
         
         return command;
     }
-    
-    // TODO: add simon says mode to avoid unintentional commands
     
     public Command locateFirstOf(List<String> commandListAsStrings) {
         Command command = null;
@@ -54,10 +54,20 @@ public class CommandLocator {
     }
     
     private boolean matchesPattern(String commandPattern, String commandAsRawString) {
+        if (simonSaysModeEnabled) {
+            commandPattern = SIMON_SAYS_PREFIX + commandPattern;
+        }
         Pattern p = Pattern.compile(commandPattern, Pattern.CASE_INSENSITIVE);
         Matcher matcher = p.matcher(commandAsRawString);
         
-        boolean matchesPattern = matcher.matches();
-        return matchesPattern;
+        return matcher.matches();
+    }
+    
+    public void enableSimonSaysMode() {
+        simonSaysModeEnabled = true;
+    }
+    
+    public void disableSimonSaysMode() {
+        simonSaysModeEnabled = false;
     }
 }
