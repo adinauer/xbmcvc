@@ -11,7 +11,7 @@ import at.fhhgb.command.Command;
 public class CommandRepository {
     private Map<String, Command> commandPatterns = new HashMap<>();
     
-    public void addCommandPattern(String commandPattern, Command command) {
+    public void addCommand(String commandPattern, Command command) {
         commandPatterns.put(commandPattern, command);
     }
     

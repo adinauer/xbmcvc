@@ -27,22 +27,22 @@ public class CommandRepositoryFactory {
         
         XbmcCommunicator communicator = new XbmcCommunicator("localhost", "8082");
         
-        repository.addCommandPattern("(louder|volume up)", new VolumeUpCommand(communicator));
-        repository.addCommandPattern("(softer|quieter|volume down)", new VolumeDownCommand(communicator));
-        repository.addCommandPattern("(mute|quiet|silence|shut up)", new MuteCommand(communicator));
-        repository.addCommandPattern("unmute", new UnmuteCommand(communicator));
-        repository.addCommandPattern("resume( playback)?", new ResumePlaybackCommand(communicator));
-        repository.addCommandPattern("pause( playback)?", new PausePlaybackCommand(communicator));
-        repository.addCommandPattern("stop( playback)?", new StopPlaybackCommand(communicator));
-        repository.addCommandPattern("home( screen)?", new NavigateHomeCommand(communicator));
-        repository.addCommandPattern("(navigate )?left", new NavigateLeftCommand(communicator));
-        repository.addCommandPattern("(navigate )?right", new NavigateRightCommand(communicator));
-        repository.addCommandPattern("(navigate )?up", new NavigateUpCommand(communicator));
-        repository.addCommandPattern("(navigate )?down", new NavigateDownCommand(communicator));
-        repository.addCommandPattern("select", new SelectCommand(communicator));
-        repository.addCommandPattern("(back|escape)", new BackCommand(communicator));
-        repository.addCommandPattern("info", new InfoCommand(communicator));
-        repository.addCommandPattern("(right click|context( menu)?|options)", new ContextMenuCommand(communicator));
+        repository.addCommand("(louder|volume up)", new VolumeUpCommand(communicator));
+        repository.addCommand("(softer|quieter|volume down)", new VolumeDownCommand(communicator));
+        repository.addCommand("(mute|quiet|silence|shut up)", new MuteCommand(communicator));
+        repository.addCommand("unmute", new UnmuteCommand(communicator));
+        repository.addCommand("resume( playback)?", new ResumePlaybackCommand(communicator));
+        repository.addCommand("pause( playback)?", new PausePlaybackCommand(communicator));
+        repository.addCommand("stop( playback)?", new StopPlaybackCommand(communicator));
+        repository.addCommand("home( screen)?", new NavigateHomeCommand(communicator));
+        repository.addCommand("(navigate )?left", new NavigateLeftCommand(communicator));
+        repository.addCommand("(navigate )?right", new NavigateRightCommand(communicator));
+        repository.addCommand("(navigate )?up", new NavigateUpCommand(communicator));
+        repository.addCommand("(navigate )?down", new NavigateDownCommand(communicator));
+        repository.addCommand("select", new SelectCommand(communicator));
+        repository.addCommand("(back|escape)", new BackCommand(communicator));
+        repository.addCommand("info", new InfoCommand(communicator));
+        repository.addCommand("(right click|context( menu)?|options)", new ContextMenuCommand(communicator));
         
         return repository;
     }

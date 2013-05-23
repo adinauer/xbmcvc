@@ -27,7 +27,7 @@ public class CommandLocatorTest {
     
     @Test
     public void locatesCommandThatMatchesGivenStringExactly() {
-        repository.addCommandPattern("louder", new VolumeUpCommand(communicator));
+        repository.addCommand("louder", new VolumeUpCommand(communicator));
         
         Command command = locator.locate("louder");
         
@@ -36,7 +36,7 @@ public class CommandLocatorTest {
     
     @Test
     public void locatesCommandThatHasExtraWords() {
-        repository.addCommandPattern("mute( please)?", new MuteCommand(communicator));
+        repository.addCommand("mute( please)?", new MuteCommand(communicator));
         
         Command command = locator.locate("mute");
         Command commandWithExtraWords = locator.locate("mute please");
@@ -52,7 +52,7 @@ public class CommandLocatorTest {
     
     @Test
     public void locatesCommandThatIsInDifferentCase() {
-        repository.addCommandPattern("louder", new VolumeUpCommand(communicator));
+        repository.addCommand("louder", new VolumeUpCommand(communicator));
         
         Command command = locator.locate("Louder");
         
