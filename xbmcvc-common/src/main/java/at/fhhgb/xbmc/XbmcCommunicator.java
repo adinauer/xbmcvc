@@ -25,8 +25,8 @@ public class XbmcCommunicator {
     
     private final String        urlString;
     
-    public XbmcCommunicator(String host, String port) {
-        urlString = "http://" + host + ":" + port + "/jsonrpc";
+    public XbmcCommunicator(String host, String port, String username, String password) {
+        urlString = "http://" + username + ":" + password + "@" + host + ":" + port + "/jsonrpc";
     }
     
     public String sendJson(String method) {

@@ -14,7 +14,11 @@ public class CLI {
         
         String commandAsString = args[0];
         
-        CommandTranslator locator = new CommandTranslator(new CommandRepositoryFactory().create("localhost", "8082"));
+        CommandTranslator locator = new CommandTranslator(new CommandRepositoryFactory().create(
+                "localhost",
+                "8082",
+                "xbmc",
+                "pwd"));
 //        locator.enableSimonSaysMode();
         
         Command command = locator.locate(commandAsString);
