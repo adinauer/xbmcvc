@@ -93,7 +93,8 @@ public class XbmcCommunicator {
         } catch (ConnectException e) {
             throw new RuntimeException(
                     "Could not connecto to XBMC. Are you sure XBMC is running and Allow control of XBMC via HTTP is checked in System > Settings > Services > Webserver? URL: "
-                            + urlString);
+                            + urlString,
+                    e);
         }
         
         return extractResponseText(response);
