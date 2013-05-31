@@ -94,7 +94,7 @@ public class MainActivity
                             t.append((i + 1) + ".) " + textMatchList.get(i) + "\n");
                         }
 
-                        new Thread(new Runnable() {
+                        this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -113,7 +113,7 @@ public class MainActivity
                                     MainActivity.this.showToastMessage("No command could be found");
                                 }
                             }
-                        }).start();
+                        });
                     }
                 }
             } else if (resultCode == RecognizerIntent.RESULT_AUDIO_ERROR) {
