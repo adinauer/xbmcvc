@@ -9,7 +9,7 @@ import at.fhhgb.command.Command;
 
 
 public class CommandRepository {
-    private Map<String, Command> commandPatterns = new HashMap<>();
+    private Map<String, Command> commandPatterns = new HashMap<String, Command>();
     
     public void addCommand(String commandPattern, Command command) {
         commandPatterns.put(commandPattern, command);

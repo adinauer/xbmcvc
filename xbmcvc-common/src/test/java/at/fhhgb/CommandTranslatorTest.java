@@ -18,7 +18,7 @@ import at.fhhgb.xbmc.XbmcCommunicator;
 
 public class CommandTranslatorTest {
     private CommandRepository repository;
-    private CommandTranslator    locator;
+    private CommandTranslator locator;
     private XbmcCommunicator  communicator;
     
     @Before
@@ -87,7 +87,7 @@ public class CommandTranslatorTest {
     }
     
     private List<String> commandsAsList(String... commands) {
-        List<String> commandList = new ArrayList<>();
+        List<String> commandList = new ArrayList<String>();
         
         for (String command : commands) {
             commandList.add(command);
