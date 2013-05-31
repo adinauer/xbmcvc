@@ -23,17 +23,18 @@ import at.fhhgb.command.VolumeUpCommand;
 import at.fhhgb.xbmc.XbmcCommunicator;
 
 
-public class CommandRepositoryFactory {
-    
+public class CommandRepositoryFactory
+{
+
     public CommandRepository create(String host, String port, String username, String password) {
         CommandRepository repository = new CommandRepository();
-        
+
         XbmcCommunicator communicator = new XbmcCommunicator(host, port, username, password);
-        
+
         repository.addCommand("(louder|volume up)", new VolumeUpCommand(communicator));
         repository.addCommand("(softer|quieter|volume down)", new VolumeDownCommand(communicator));
-        repository.addCommand("(mute|quiet|silence|shut up)", new MuteCommand(communicator));
-        repository.addCommand("unmute", new UnmuteCommand(communicator));
+        repository.addCommand("(sound off|mute|quiet|silence|shut up)", new MuteCommand(communicator));
+        repository.addCommand("(sound on|unmute)", new UnmuteCommand(communicator));
         repository.addCommand("resume( playback)?", new ResumePlaybackCommand(communicator));
         repository.addCommand("pause( playback)?", new PausePlaybackCommand(communicator));
         repository.addCommand("stop( playback)?", new StopPlaybackCommand(communicator));
@@ -49,8 +50,8 @@ public class CommandRepositoryFactory {
         repository.addCommand("(show )?controls", new ShowOsdCommand(communicator));
         repository.addCommand("next.*", new PlayerNextCommand(communicator));
         repository.addCommand("previous.*", new PlayerPreviousCommand(communicator));
-        
+
         return repository;
     }
-    
+
 }
