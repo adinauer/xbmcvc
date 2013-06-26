@@ -70,7 +70,7 @@ public class XbmcCommunicator {
     
     private String extractPlayerId(String result) {
         String playerId = null;
-        Pattern p = Pattern.compile("playerid\":(\\d+)");
+        Pattern p = Pattern.compile("playerid\":.?(\\d+)");
         Matcher matcher = p.matcher(result);
         if (matcher.find()) {
             playerId = matcher.group(1);
